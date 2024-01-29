@@ -1,0 +1,31 @@
+---
+serviceAccount:
+  annotations:
+    "eks.amazonaws.com/role-arn": "arn:aws:iam::123456789103:role/APP_NAME" #change here
+
+envSecrets:
+  secret1:
+    name: APP_NAME
+    data:
+      SECRET_NAME: APP_NAME
+      REGION_NAME: us-west-2
+      DJANGO_WSGI_MODULE: issuer.wsgi
+      PORT: '8121'
+      DJANGO_LOG_LEVEL: DEBUG
+
+image:
+  repository: "123456789103.dkr.ecr.us-west-2.amazonaws.com/APP_NAME" #change here
+  pullPolicy: Always
+  tag: "latest"
+
+deployments:
+  deployment1:
+    volumeMounts:
+      - name: VOLUME_NAME # volume name
+        mountPath: /etc/ssl/certs/ca.crt  # file in container
+        subPath: ca.crt   #key in configmap
+    volumes:
+      - name: VOLUME_NAME
+        secret:
+          secretName: VOLUME_NAME
+          defaultMode: 420

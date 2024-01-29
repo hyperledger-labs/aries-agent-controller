@@ -1,0 +1,9 @@
+//Connect Agents
+
+//Endpoint: 
+// api/v1/agent/?userId=14
+
+{
+    "userId": "14",
+    "email": "bob18@aol.com"
+}

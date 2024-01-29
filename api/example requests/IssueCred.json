@@ -1,0 +1,39 @@
+//Issue Credentials
+
+//Endpoint: 
+// api/v1/issue/?userId=14
+
+{
+    "attributes": {
+        "userId": "abc1-123d-qwery",
+        "email": "bob@aol.com",
+        "role": "user"
+    },
+    "name": "User",
+    "version": "2.0",
+    "userId": "456"
+}
+
+{
+    "attributes": {
+        "name": "tim",
+        "car": "porsche",
+        "model": "911 turbo"
+    },
+    "name": "testLocal",
+    "version": "1.33",
+    "userId": "14"
+}
+
+
+{
+    "attributes": {
+        "test": "bob",
+        "test2": "benz",
+        "test3": "08"
+    },
+    "name": "testLocal4",
+    "version": "1.41",
+    "userId": "93"
+}
+

@@ -1,0 +1,22 @@
+//Create Schema 
+
+//Endpoint: 
+// api/v1/schema/
+
+{
+    "org_name":"CarCompany",
+    "attributes": ["name","car", "model"],
+    "schema_name":"vehicle",
+    "schema_version":"2.0",
+    "registry_size":2000,
+    "revocation": true
+}
+
+{
+    "org_name":"testLocal4",
+    "attributes": ["test","test2", "test3"],
+    "schema_name":"testLocal4",
+    "schema_version":"1.41",
+    "registry_size":10000,
+    "revocation": false
+}

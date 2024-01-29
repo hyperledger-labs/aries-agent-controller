@@ -1,0 +1,45 @@
+---
+serviceAccount:
+  annotations:
+    "eks.amazonaws.com/role-arn": "arn:aws:iam::123456789104:role/APP_NAME"
+
+envSecrets:
+  secret1:
+    name: APP_NAME
+    data:
+      SECRET_NAME: APP_NAME
+      REGION_NAME: us-west-2
+      DJANGO_WSGI_MODULE: issuer.wsgi
+      PORT: '8121'
+      DJANGO_LOG_LEVEL: DEBUG
+
+
+ingresses:
+  ingress1:
+    name: APP_NAME
+    domain: APP_NAME
+    healthCheckPath: /healthz
+    annotations:
+      ingress.kubernetes.io/target-node-labels: esk.amazonaws.com/nodegroup=default
+    rules:
+      - paths:
+        - path: /
+          name: APP_NAME
+          serviceName: SERVICE_NAME
+          
+deployments:
+  deployment1:
+    volumeMounts:
+      - name: vault-ca  # volume name
+        mountPath: /etc/ssl/certs/vault.ca  # file in container
+        subPath: vault.ca   #key in configmap
+    volumes:
+      - name: vault-ca
+        configMap:
+          name: vault-ca
+          defaultMode: 420
+
+image:
+  repository: "123456789104.dkr.ecr.us-west-2.amazonaws.com/APP_NAME"
+  pullPolicy: Always
+  tag: "latest"
