@@ -1,0 +1,136 @@
+version: "3"
+services:
+  issuer:
+    image: ghcr.io/hyperledger/aries-cloudagent-python:py3.9-0.11.0
+    container_name: issuer
+    environment:
+      ACAPY_WALLET_SEED: ${ISSUER_WALLET_SEED}
+      ACAPY_WALLET_KEY: ${ISSUER_WALLET_KEY}
+      ACAPY_ADMIN_INSECURE_MODE: "false"
+      ACAPY_DEBUG_CONNECTIONS: "true"
+      ACAPY_PUBLIC_INVITES: "true"
+      ACAPY_ADMIN_API_KEY: ${ISSUER_API_KEY}
+      ACAPY_ENDPOINT: "http://issuer:7000"
+      ACAPY_GENESIS_URL: "${GENESIS_URL}"
+      ACAPY_LABEL: "Issuer"
+      ACAPY_LOG_LEVEL: "debug"
+      ACAPY_WALLET_TYPE: "askar"
+      ACAPY_AUTO_PROVISION: "true"
+      ACAPY_TAILS_SERVER_BASE_URL: ${TAILS_SERVER_BASE_URL}
+      ADMIN_PORT: "7001"
+      AGENT_PORT: "7000"
+      # ACAPY_STORAGE_CONFIG: "{\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5,\"wallet_scheme\":MultiWalletSingleTable}"
+      # ACAPY_STORAGE_CREDS: "{\"account\":\"${POSTGRESQL_WALLET_USER}\",\"password\":\"${POSTGRESQL_WALLET_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_ADMIN_USER}\",\"admin_password\":\"${POSTGRESQL_WALLET_ADMIN_PASSWORD}\"}"
+      # ACAPY_CREDENTIAL_STORE_NAME: "agent-secure-storage"
+      # ACAPY_STORAGE_TYPE: "postgres_storage"
+      TAG_NAME: "prod"
+    entrypoint: /bin/bash
+    command: ["-c",
+        "aca-py start \
+        --admin '0.0.0.0' 7001 \
+        --inbound-transport http '0.0.0.0' 7000 \
+        --webhook-url http://host.docker.internal:8000/api/v1/issuer \
+        --outbound-transport http \
+        --wallet-type askar \
+        --wallet-allow-insecure-seed \
+        --trace-target log \
+        --anoncreds-legacy-revocation accept \
+        --trace-tag acapy.events \
+        --wallet-name issuerwallet \
+        --public-invites \
+        --auto-provision \
+        --notify-revocation \
+        --emit-new-didcomm-prefix \
+        --monitor-revocation-notification \
+        --log-level DEBUG  "
+    ]
+    ports:
+      - "7001:7001"
+
+  holder:
+    image: ghcr.io/hyperledger/aries-cloudagent-python:py3.9-0.11.0
+    container_name: holder
+    environment:
+      ACAPY_ADMIN_INSECURE_MODE: "false"
+      ACAPY_AUTO_PROVISION: "true"
+      ACAPY_DEBUG_CONNECTIONS: "true"
+      ACAPY_ADMIN_API_KEY: ${HOLDER_API_KEY}
+      ACAPY_WALLET_TYPE: "askar"
+      ACAPY_GENESIS_URL: "${GENESIS_URL}"
+      ACAPY_ENDPOINT: "http://holder:8001"
+      ACAPY_LABEL: "Holder"
+      ACAPY_LOG_LEVEL: "debug"
+      ADMIN_PORT: "8002"
+      AGENT_PORT: "8001"
+      ACA_PY_WALLET_NAME: "holderwallet"
+      ACAPY_WALLET_KEY: ${HOLDER_WALLET_KEY}
+      # ACAPY_STORAGE_CONFIG: "{\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5,\"wallet_scheme\":MultiWalletSingleTable}"
+      # ACAPY_STORAGE_CREDS: "{\"account\":\"${POSTGRESQL_WALLET_USER}\",\"password\":\"${POSTGRESQL_WALLET_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_ADMIN_USER}\",\"admin_password\":\"${POSTGRESQL_WALLET_ADMIN_PASSWORD}\"}"
+      # ACAPY_CREDENTIAL_STORE_NAME: "agent-secure-storage"
+      # ACAPY_STORAGE_TYPE: "postgres_storage"
+      MONITOR_REVOCATION_NOTIFICATION: "true"
+      TAG_NAME: "prod"
+    entrypoint: /bin/bash
+    command: ["-c",
+        "aca-py start \
+        --admin '0.0.0.0' 8002 \
+        --inbound-transport http '0.0.0.0' 8001 \
+        --webhook-url http://host.docker.internal:8000/api/v1/holder \
+        --outbound-transport http \
+        --multitenant \
+        --multitenant-admin \
+        --anoncreds-legacy-revocation accept \
+        --wallet-type askar \
+        --trace-target log \
+        --jwt-secret a3xZlplyokQ8hqMgghjTBqD6YRgXLbkl \
+        --trace-tag acapy.events \
+        --public-invites "
+      ]
+    ports:
+      - "8002:8002"
+
+  verifier:
+    image: ghcr.io/hyperledger/aries-cloudagent-python:py3.9-0.11.0
+    container_name: verifier
+    environment:
+      ACAPY_WALLET_SEED: ${VERIFIER_WALLET_SEED}
+      ACAPY_WALLET_KEY: ${VERIFIER_WALLET_KEY}
+      ACAPY_ADMIN_INSECURE_MODE: "false"
+      ACAPY_DEBUG_CONNECTIONS: "true"
+      ACAPY_PUBLIC_INVITES: "true"
+      ACAPY_ADMIN_API_KEY: ${VERIFIER_API_KEY}
+      ACAPY_ENDPOINT: "http://verifier:7004"
+      ACAPY_GENESIS_URL: "${GENESIS_URL}"
+      ACAPY_LABEL: "Verifier"
+      ACAPY_LOG_LEVEL: "debug"
+      ACAPY_WALLET_TYPE: "askar"
+      ACAPY_AUTO_PROVISION: "true"
+      ACAPY_TAILS_SERVER_BASE_URL: ${TAILS_SERVER_BASE_URL}
+      ADMIN_PORT: "7003"
+      AGENT_PORT: "7004"
+      # ACAPY_STORAGE_CONFIG: "{\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5,\"wallet_scheme\":MultiWalletSingleTable}"
+      # ACAPY_STORAGE_CREDS: "{\"account\":\"${POSTGRESQL_WALLET_USER}\",\"password\":\"${POSTGRESQL_WALLET_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_ADMIN_USER}\",\"admin_password\":\"${POSTGRESQL_WALLET_ADMIN_PASSWORD}\"}"
+      # ACAPY_CREDENTIAL_STORE_NAME: "agent-secure-storage"
+      # ACAPY_STORAGE_TYPE: "postgres_storage"
+      TAG_NAME: "prod"
+    entrypoint: /bin/bash
+    command: ["-c",
+        "aca-py start \
+        --admin '0.0.0.0' 7003 \
+        --inbound-transport http '0.0.0.0' 7004 \
+        --webhook-url http://host.docker.internal:8000/api/v1/verifier \
+        --outbound-transport http \
+        --wallet-type askar \
+        --trace-target log \
+        --trace-tag acapy.events \
+        --wallet-name issuerwallet \
+        --anoncreds-legacy-revocation accept \
+        --public-invites \
+        --auto-provision \
+        --notify-revocation \
+        --emit-new-didcomm-prefix \
+        --monitor-revocation-notification \
+        --log-level DEBUG  "
+    ]
+    ports:
+      - "7003:7003"

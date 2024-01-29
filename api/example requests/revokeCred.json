@@ -1,0 +1,12 @@
+//Fetch Revocation for specific schema credential definition
+
+//Endpoint: 
+// api/v1/revokecred/?schema_name=testLocal&&version=1.33
+
+//===Post 
+//revoke a user specific credential
+{
+    "userId":"14",
+    "schema_name":"testLocal",
+    "version":"1.33"
+}

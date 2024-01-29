@@ -1,0 +1,24 @@
+{
+    "indy": {
+        "requested_attributes": {
+            "additionalProp1": {
+                "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "revealed": true
+            },
+            "additionalProp2": {
+                "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "revealed": true
+            },
+            "additionalProp3": {
+                "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "revealed": true
+            }
+        },
+        "requested_predicates": {}
+    },
+    "self_attested_attributes": {
+        "additionalProp1": "self_attested_value",
+        "additionalProp2": "self_attested_value",
+        "additionalProp3": "self_attested_value"
+    }
+}

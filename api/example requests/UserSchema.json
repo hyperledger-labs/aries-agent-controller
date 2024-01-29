@@ -1,0 +1,8 @@
+{
+    "org_name":"Company",
+    "attributes": ["userId","email", "role"],
+    "schema_name":"User",
+    "schema_version":"5.0",
+    "registry_size":1000,
+    "revocation": false
+}

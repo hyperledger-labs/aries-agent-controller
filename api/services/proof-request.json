@@ -1,0 +1,47 @@
+{
+    "auto_verify": false,
+    "comment": "Proof request for cognito_id and username attributes",
+    "connection_id": "issuer_to_holder_conn",
+    "presentation_request": {
+        "dif": {}
+    },
+    "indy": {
+        "name": "Proof request",
+        "non_revoked": {},
+        "nonce": "1",
+        "requested_attributes": {
+            "0_userId_uuid": {
+                "name": "userId",
+                "restrictions": [
+                    {
+                        "schema_name": "schema_name",
+                        "schema_version": "schema_version",
+                        "issuer_did": "issuer_did"
+                    }
+                ]
+            },
+            "0_email_string": {
+                "name": "email",
+                "restrictions": [
+                    {
+                        "schema_name": "schema_name",
+                        "schema_version": "schema_version",
+                        "issuer_did": "issuer_did"
+                    }
+                ]
+            },
+            "0_role_string": {
+                "name": "role",
+                "restrictions": [
+                    {
+                        "schema_name": "schema_name",
+                        "schema_version": "schema_version",
+                        "issuer_did": "issuer_did"
+                    }
+                ]
+            }
+        },
+        "requested_predicates": {},
+        "version": "1.0"
+    }
+}

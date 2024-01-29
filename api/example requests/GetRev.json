@@ -1,0 +1,12 @@
+//Fetch Revocation
+//Endpoint: 
+// api/v1/revoke/
+
+//===Post
+//make credential revokable after the fact
+{
+    "schema_name": "testLocal",
+    "version":"1.33"
+}
+
+// ?schema_name=testLocal&&version=1.33

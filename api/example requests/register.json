@@ -1,0 +1,12 @@
+//Create Did and Multitenancy wallet for user
+
+//Endpoint: 
+// api/v1/register/?userId=14
+
+//===Post 
+//register a user
+{
+    "userId": "1",
+    "email": "bob18@aol.com",
+    "mspId":"TESTMSP"
+}

@@ -1,0 +1,25 @@
+//Proof verification
+
+//Endpoint: 
+// api/v1/proof/?userId=14
+
+//===Post 
+//verify proof
+
+{
+    "userId":"1",
+    "schema_name":"User",
+    "version":"5.0"
+}
+
+{
+    "userId":"52",
+    "schema_name":"testLocal",
+    "version":"2.2"
+}
+
+{
+    "userId":"93",
+    "schema_name":"testLocal4",
+    "version":"1.41"
+}

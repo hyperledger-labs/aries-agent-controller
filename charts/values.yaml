@@ -1,0 +1,59 @@
+---
+replicaCount: 1
+
+environmentVariables: {}
+
+nameOverride: APP_NAME
+
+fullnameOverride: APP_NAME
+
+serviceAccount: {}
+
+nodeSelector:
+  eks.amazonaws.com/nodegroup: worker
+
+aws:
+  region: us-west-2
+
+image: {}
+
+services:
+  service1:
+    name: APP_NAME
+    type: NodePort
+    protocol: TCP
+    servicePort: 8121
+    servicePortName: APP_NAME-http
+    containerPort: 8121
+
+ingresses: {}
+
+deployments:
+  deployment1:
+    name: APP_NAME
+    strategy:
+      type: RollingUpdate
+      maxSurge: 1
+      maxUnavailable: 50%
+    autoscaling:
+      enabled: false
+    containerPortEnabled: true
+    containerPort: 8121
+    livenessProbeEnabled: true
+    livenessProbe:
+      healthCheckPath: /healthz
+    nodeSelector:
+      eks.amazonaws.com/nodegroup: worker
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 200m
+        memory: 256Mi
+    replicaCount: 1
+    secretsRef:
+      - "APP_NAME"
+    command: 
+      - sh
+      - ./bin/start.sh
